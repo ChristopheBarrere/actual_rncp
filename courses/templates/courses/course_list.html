@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planning des cours</title>
+</head>
+<body>
+
+    <h1>Plannning des cours</h1>
+    
+    {% for course in courses %}
+
+        <h2>{{ course.title }}</h2>
+        <p>
+            Coach: {{ course.coach }}
+        </p>
+        <p>
+            Date: {{ course.start_at }}
+        </p>
+        <p>
+            Durée: {{ course.duration_minutes }} minutes
+        </p>
+        <p>
+            Places: {{ course.capacity }}
+        </p>
+
+    {% empty %}
+
+        <p>Aucun cours disponible.</p>
+
+    {% endfor %}
+
+</body>
+</html>
