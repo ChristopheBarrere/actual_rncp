@@ -25,6 +25,10 @@
             Places: {{ course.capacity }}
         </p>
 
+        <a href="{% url 'course_detail' course.id %}">
+            Voir le détail
+        </a>
+
     {% empty %}
 
         <p>Aucun cours disponible.</p>
