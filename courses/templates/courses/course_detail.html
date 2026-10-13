@@ -7,6 +7,16 @@
 </head>
 <body>
 
+    {% if messages %}
+
+    {% for message in messages %}
+
+        <p>{{ message }}</p>
+
+    {% endfor %}
+
+    {% endif %}
+
     <h1>{{ course.title }}</h1>
 
     <p>
@@ -36,10 +46,49 @@
     {% endif %}
 
     <a href="{% url 'course_list' %}">
-
         Retour au planning
-
     </a>
+
+    <p>
+    Places disponibles :
+    {{ course.places_available }}
+    sur {{ course.capacity }}
+    </p>
+
+    {% if course.is_cancelled %}
+
+        <p>Ce cours est annulé.</p>
+
+    {% elif course.is_full %}
+
+        <p>Ce cours est complet.</p>
+
+    {% elif user.is_authenticated %}
+
+        {% if not has_confirmed_reservation %}
+
+            <form
+                method="post"
+                action="{% url 'reserve_course' course.id %}"
+            >
+
+                {% csrf_token %}
+
+                <button type="submit">
+                    Réserver ce cours
+                </button>
+
+            </form>
+
+        {% endif %}
+
+    {% else %}
+
+        <a href="{% url 'login' %}">
+            Connectez-vous pour réserver
+        </a>
+
+    {% endif %}
     
 </body>
 </html>

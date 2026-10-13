@@ -16,6 +16,27 @@ class Course(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def confirmed_reservations_count(self):
+
+        return self.reservations.filter(
+            status=Reservations.Status.CONFIRMED
+        ).count()
+
+    @property
+    def places_available(self):
+
+        return max(
+            self.capacity - self.confirmed_reservations_count,
+            0
+        )
+
+    @property
+    def is_full(self):
+
+        return self.places_available == 0
+
+
 class Reservations(models.Model):
 
     class Status(models.TextChoices):
