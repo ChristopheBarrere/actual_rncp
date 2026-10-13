@@ -1,114 +1,129 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html lang="fr">
+{% block title %}{{ course.title }} — Actual{% endblock %}
 
-<head>
+{% block content %}
 
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
+    <a
+        class="text-decoration-none"
+        href="{% url 'course_list' %}"
     >
+        ← Retour au planning
+    </a>
 
-    <title>{{ course.title }}</title>
+    <article class="card detail-card mt-4">
 
-</head>
+        <div class="card-body p-4 p-lg-5">
 
-<body>
+            <div class="d-flex justify-content-between gap-3 mb-3">
 
-    {% if messages %}
+                <h1 class="mb-0">{{ course.title }}</h1>
 
-        {% for message in messages %}
+                {% if course.is_cancelled %}
 
-            <p>{{ message }}</p>
+                    <span class="badge text-bg-danger align-self-start">
+                        Annulé
+                    </span>
 
-        {% endfor %}
+                {% elif course.is_full %}
 
-    {% endif %}
+                    <span class="badge text-bg-warning align-self-start">
+                        Complet
+                    </span>
 
-    <h1>{{ course.title }}</h1>
+                {% else %}
 
-    <p>
-        {{ course.description }}
-    </p>
+                    <span class="badge text-bg-success align-self-start">
+                        Disponible
+                    </span>
 
-    <p>
-        Coach : {{ course.coach }}
-    </p>
+                {% endif %}
 
-    <p>
-        Date : {{ course.start_at }}
-    </p>
+            </div>
 
-    <p>
-        Durée : {{ course.duration_minutes }} minutes
-    </p>
+            <p class="lead">{{ course.description }}</p>
 
-    <p>
-        Nombre de places : {{ course.capacity }}
-    </p>
+            <hr>
 
-    <p>
-        Places disponibles :
-        {{ course.places_available }}
-        sur {{ course.capacity }}
-    </p>
+            <dl class="row mb-4">
 
-    {% if has_confirmed_reservation %}
+                <dt class="col-sm-4">Coach</dt>
+                <dd class="col-sm-8">{{ course.coach }}</dd>
 
-        <p>Vous avez réservé ce cours.</p>
+                <dt class="col-sm-4">Date</dt>
+                <dd class="col-sm-8">
+                    {{ course.start_at|date:"d/m/Y à H:i" }}
+                </dd>
 
-        <form
-            method="post"
-            action="{% url 'cancel_reservation' course.id %}"
-        >
+                <dt class="col-sm-4">Durée</dt>
+                <dd class="col-sm-8">
+                    {{ course.duration_minutes }} minutes
+                </dd>
 
-            {% csrf_token %}
+                <dt class="col-sm-4">Places disponibles</dt>
+                <dd class="col-sm-8">
+                    {{ course.places_available }}
+                    sur {{ course.capacity }}
+                </dd>
 
-            <button type="submit">
-                Annuler ma réservation
-            </button>
+            </dl>
 
-        </form>
+            {% if has_confirmed_reservation %}
 
-    {% elif course.is_cancelled %}
+                <div class="alert alert-success">
+                    Vous avez réservé ce cours.
+                </div>
 
-        <p>Ce cours est annulé.</p>
+                <form
+                    method="post"
+                    action="{% url 'cancel_reservation' course.id %}"
+                >
 
-    {% elif course.is_full %}
+                    {% csrf_token %}
 
-        <p>Ce cours est complet.</p>
+                    <button class="btn btn-outline-danger" type="submit">
+                        Annuler ma réservation
+                    </button>
 
-    {% elif user.is_authenticated %}
+                </form>
 
-        <form
-            method="post"
-            action="{% url 'reserve_course' course.id %}"
-        >
+            {% elif course.is_cancelled %}
 
-            {% csrf_token %}
+                <div class="alert alert-danger mb-0">
+                    Ce cours a été annulé.
+                </div>
 
-            <button type="submit">
-                Réserver ce cours
-            </button>
+            {% elif course.is_full %}
 
-        </form>
+                <div class="alert alert-warning mb-0">
+                    Ce cours est complet.
+                </div>
 
-    {% else %}
+            {% elif user.is_authenticated %}
 
-        <a href="{% url 'login' %}">
-            Connectez-vous pour réserver
-        </a>
+                <form
+                    method="post"
+                    action="{% url 'reserve_course' course.id %}"
+                >
 
-    {% endif %}
+                    {% csrf_token %}
 
-    <p>
-        <a href="{% url 'course_list' %}">
-            Retour au planning
-        </a>
-    </p>
+                    <button class="btn btn-actual" type="submit">
+                        Réserver ce cours
+                    </button>
 
-</body>
+                </form>
 
-</html>
+            {% else %}
+
+                <a class="btn btn-actual" href="{% url 'login' %}">
+                    Se connecter pour réserver
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </article>
+
+{% endblock %}

@@ -1,35 +1,44 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html lang="fr">
+{% block title %}Connexion — Actual{% endblock %}
 
-<head>
+{% block content %}
 
-    <meta charset="UTF-8">
+    <section class="card auth-card">
 
-    <title>Connexion</title>
+        <div class="card-body p-4 p-lg-5">
 
-</head>
+            <h1 class="h2 mb-3">Se connecter</h1>
 
-<body>
+            <p class="text-secondary mb-4">
+                Connectez-vous pour réserver vos prochains cours.
+            </p>
 
-    <h1>Connexion</h1>
+            <form method="post">
 
-    <form method="post">
+                {% csrf_token %}
 
-        {% csrf_token %}
+                {{ form.as_p }}
 
-        {{ form.as_p }}
+                <button
+                    class="btn btn-actual w-100"
+                    type="submit"
+                >
+                    Se connecter
+                </button>
 
-        <button type="submit">
-            Se connecter
-        </button>
+            </form>
 
-    </form>
+            <p class="mt-4 mb-0">
+                Vous n’avez pas encore de compte ?
 
-    <a href="{% url 'register' %}">
-        Créer un compte
-    </a>
+                <a href="{% url 'register' %}">
+                    S’inscrire
+                </a>
+            </p>
 
-</body>
+        </div>
 
-</html>
+    </section>
+
+{% endblock %}

@@ -1,69 +1,112 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planning des cours</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-    {% if user.is_authenticated %}
+{% block title %}Planning des cours — Actual{% endblock %}
 
-        <p>Bonjour {{ user.username }}</p>
+{% block content %}
 
-        <a href="{% url 'my_reservations' %}">
-        Mes réservations
-        </a>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <form method="post" action="{% url 'logout' %}">
+        <div>
 
-            {% csrf_token %}
+            <h1 class="page-title mb-1">
+                Planning des cours
+            </h1>
 
-            <button type="submit">
-                Se déconnecter
-            </button>
+            <p class="text-secondary mb-0">
+                Choisissez votre prochaine séance.
+            </p>
 
-        </form>
+        </div>
 
-    {% else %}
+    </div>
 
-        <a href="{% url 'login' %}">
-            Se connecter
-        </a>
+    <div class="row g-4">
 
-        <a href="{% url 'register' %}">
-            Créer un compte
-        </a>
+        {% for course in courses %}
 
-    {% endif %}
+            <div class="col-md-6 col-lg-4">
 
-    <h1>Plannning des cours</h1>
-    
-    {% for course in courses %}
+                <article class="card course-card h-100">
 
-        <h2>{{ course.title }}</h2>
-        <p>
-            Coach: {{ course.coach }}
-        </p>
-        <p>
-            Date: {{ course.start_at }}
-        </p>
-        <p>
-            Durée: {{ course.duration_minutes }} minutes
-        </p>
-        <p>
-            Places: {{ course.capacity }}
-        </p>
+                    <div class="card-body">
 
-        <a href="{% url 'course_detail' course.id %}">
-            Voir le détail
-        </a>
+                        <div class="d-flex justify-content-between gap-2">
 
-    {% empty %}
+                            <h2 class="h4 card-title">
+                                {{ course.title }}
+                            </h2>
 
-        <p>Aucun cours disponible.</p>
+                            {% if course.is_cancelled %}
 
-    {% endfor %}
+                                <span class="badge text-bg-danger align-self-start">
+                                    Annulé
+                                </span>
 
-</body>
-</html>
+                            {% elif course.is_full %}
+
+                                <span class="badge text-bg-warning align-self-start">
+                                    Complet
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge text-bg-success align-self-start">
+                                    Disponible
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                        <p class="course-meta">
+                            Coach : {{ course.coach }}
+                        </p>
+
+                        <p class="course-meta">
+                            {{ course.start_at|date:"d/m/Y à H:i" }}
+                        </p>
+
+                        <p class="course-meta">
+                            {{ course.duration_minutes }} minutes
+                        </p>
+
+                        <p class="mb-0">
+                            <strong>
+                                {{ course.places_available }}
+                            </strong>
+                            place{{ course.places_available|pluralize }}
+                            disponible{{ course.places_available|pluralize }}
+                        </p>
+
+                    </div>
+
+                    <div class="card-footer bg-white border-0 pb-4">
+
+                        <a
+                            class="btn btn-actual"
+                            href="{% url 'course_detail' course.id %}"
+                        >
+                            Voir le cours
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        {% empty %}
+
+            <div class="col-12">
+
+                <div class="alert alert-info">
+                    Aucun cours n’est actuellement disponible.
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

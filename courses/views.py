@@ -216,3 +216,10 @@ def my_reservations(request):
         'courses/my_reservations.html',
         {'reservations': reservations}
     )
+
+def home(request):
+
+    return render(
+        request,
+        'courses/home.html'
+    )

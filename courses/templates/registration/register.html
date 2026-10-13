@@ -1,26 +1,44 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html lang="fr">
+{% block title %}Inscription — Actual{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Créer un compte</title>
-</head>
+{% block content %}
 
-<body>
-    <h1>Créer un compte</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">
-            S’inscrire
-        </button>
-    </form>
+    <section class="card auth-card">
 
-    <a href="{% url 'course_list' %}">
-        Retour aux cours
-    </a>
+        <div class="card-body p-4 p-lg-5">
 
-</body>
+            <h1 class="h2 mb-3">Créer un compte</h1>
 
-</html>
+            <p class="text-secondary mb-4">
+                Créez votre compte pour réserver un cours.
+            </p>
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button
+                    class="btn btn-actual w-100"
+                    type="submit"
+                >
+                    S’inscrire
+                </button>
+
+            </form>
+
+            <p class="mt-4 mb-0">
+                Vous possédez déjà un compte ?
+
+                <a href="{% url 'login' %}">
+                    Se connecter
+                </a>
+            </p>
+
+        </div>
+
+    </section>
+
+{% endblock %}

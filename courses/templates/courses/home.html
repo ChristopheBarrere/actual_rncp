@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Actual — Salle de sport{% endblock %}
+
+{% block body_class %}home-page{% endblock %}
+
+{% block main %}
+
+    <main class="hero-section">
+
+        <div class="container hero-container">
+
+            <div class="hero-content">
+
+                <h1>
+                    Entraînez-vous avec<br>
+                    les meilleurs coachs
+                </h1>
+
+                <p class="hero-description">
+                    Découvrez des séances de sport variées et
+                    réservez en quelques clics. Yoga, fitness,
+                    CrossFit, et bien plus encore.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a
+                        class="btn btn-light btn-lg"
+                        href="{% url 'course_list' %}"
+                    >
+                        ▶ Commencer
+                    </a>
+
+                    <a
+                        class="btn btn-secondary btn-lg"
+                        href="{% url 'course_list' %}"
+                    >
+                        ℹ Découvrir
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+{% endblock %}
