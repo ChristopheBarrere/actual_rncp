@@ -201,3 +201,18 @@ def cancel_reservation(request, course_id):
         'course_detail',
         course_id=course_id
     )
+
+@login_required
+def my_reservations(request):
+
+    reservations = (
+        request.user.reservations
+        .select_related('course')
+        .order_by('-course__start_at')
+    )
+
+    return render(
+        request,
+        'courses/my_reservations.html',
+        {'reservations': reservations}
+    )

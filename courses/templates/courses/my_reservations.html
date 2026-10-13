@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Mes réservations</title>
+
+</head>
+
+<body>
+
+    <h1>Mes réservations</h1>
+
+    {% for reservation in reservations %}
+
+        <article>
+
+            <h2>{{ reservation.course.title }}</h2>
+
+            <p>
+                {{ reservation.course.start_at|date:"d/m/Y H:i" }}
+            </p>
+
+            <p>
+                Coach : {{ reservation.course.coach }}
+            </p>
+
+            <p>
+                Statut : {{ reservation.get_status_display }}
+            </p>
+
+            {% if reservation.course.is_cancelled %}
+
+                <p>Le cours a été annulé.</p>
+
+            {% endif %}
+
+            <a
+                href="{% url 'course_detail' reservation.course.id %}"
+            >
+                Voir le cours
+            </a>
+
+        </article>
+
+    {% empty %}
+
+        <p>Vous n’avez encore aucune réservation.</p>
+
+    {% endfor %}
+
+    <a href="{% url 'course_list' %}">
+        Retour aux cours
+    </a>
+
+</body>
+
+</html>

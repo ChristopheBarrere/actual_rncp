@@ -9,17 +9,21 @@
 
     {% if user.is_authenticated %}
 
-    <p>Bonjour {{ user.username }}</p>
+        <p>Bonjour {{ user.username }}</p>
 
-    <form method="post" action="{% url 'logout' %}">
+        <a href="{% url 'my_reservations' %}">
+        Mes réservations
+        </a>
 
-        {% csrf_token %}
+        <form method="post" action="{% url 'logout' %}">
 
-        <button type="submit">
-            Se déconnecter
-        </button>
+            {% csrf_token %}
 
-    </form>
+            <button type="submit">
+                Se déconnecter
+            </button>
+
+        </form>
 
     {% else %}
 

@@ -43,6 +43,12 @@ urlpatterns = [
     ),
 
     path(
+        'mes-reservations/',
+        views.my_reservations,
+        name='my_reservations'
+    ),
+
+    path(
         '<int:course_id>/',
         views.course_detail,
         name='course_detail'
