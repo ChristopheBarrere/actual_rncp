@@ -174,3 +174,30 @@ def reserve_course(request, course_id):
         'course_detail',
         course_id=course.id
     )
+
+@login_required
+@require_POST
+def cancel_reservation(request, course_id):
+
+    reservation = get_object_or_404(
+        Reservations,
+        user=request.user,
+        course_id=course_id,
+        status=Reservations.Status.CONFIRMED
+    )
+
+    reservation.status = Reservations.Status.CANCELLED
+
+    reservation.save(
+        update_fields=['status', 'updated_at']
+    )
+
+    messages.success(
+        request,
+        'Votre réservation est annulée.'
+    )
+
+    return redirect(
+        'course_detail',
+        course_id=course_id
+    )

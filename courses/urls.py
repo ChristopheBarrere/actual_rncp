@@ -31,6 +31,18 @@ urlpatterns = [
     ),
 
     path(
+        '<int:course_id>/annuler-reservation/',
+        views.cancel_reservation,
+        name='cancel_reservation'
+    ),
+
+    path(
+        '<int:course_id>/annuler/',
+        views.cancel_reservation,
+        name='cancel_reservation'
+    ),
+
+    path(
         '<int:course_id>/',
         views.course_detail,
         name='course_detail'

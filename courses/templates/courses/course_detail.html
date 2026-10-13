@@ -1,19 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="fr">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>{{ course.title }}</title>
+
 </head>
+
 <body>
 
     {% if messages %}
 
-    {% for message in messages %}
+        {% for message in messages %}
 
-        <p>{{ message }}</p>
+            <p>{{ message }}</p>
 
-    {% endfor %}
+        {% endfor %}
 
     {% endif %}
 
@@ -39,23 +49,30 @@
         Nombre de places : {{ course.capacity }}
     </p>
 
-    {% if course.is_cancelled %}
-
-        <p>Ce cours est annulé.</p>
-
-    {% endif %}
-
-    <a href="{% url 'course_list' %}">
-        Retour au planning
-    </a>
-
     <p>
-    Places disponibles :
-    {{ course.places_available }}
-    sur {{ course.capacity }}
+        Places disponibles :
+        {{ course.places_available }}
+        sur {{ course.capacity }}
     </p>
 
-    {% if course.is_cancelled %}
+    {% if has_confirmed_reservation %}
+
+        <p>Vous avez réservé ce cours.</p>
+
+        <form
+            method="post"
+            action="{% url 'cancel_reservation' course.id %}"
+        >
+
+            {% csrf_token %}
+
+            <button type="submit">
+                Annuler ma réservation
+            </button>
+
+        </form>
+
+    {% elif course.is_cancelled %}
 
         <p>Ce cours est annulé.</p>
 
@@ -65,22 +82,18 @@
 
     {% elif user.is_authenticated %}
 
-        {% if not has_confirmed_reservation %}
+        <form
+            method="post"
+            action="{% url 'reserve_course' course.id %}"
+        >
 
-            <form
-                method="post"
-                action="{% url 'reserve_course' course.id %}"
-            >
+            {% csrf_token %}
 
-                {% csrf_token %}
+            <button type="submit">
+                Réserver ce cours
+            </button>
 
-                <button type="submit">
-                    Réserver ce cours
-                </button>
-
-            </form>
-
-        {% endif %}
+        </form>
 
     {% else %}
 
@@ -89,6 +102,13 @@
         </a>
 
     {% endif %}
-    
+
+    <p>
+        <a href="{% url 'course_list' %}">
+            Retour au planning
+        </a>
+    </p>
+
 </body>
+
 </html>
