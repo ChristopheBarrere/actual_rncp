@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}Confidentialité — Actual{% endblock %}
+
+{% block content %}
+
+    <article class="card detail-card">
+
+        <div class="card-body p-4 p-lg-5">
+
+            <h1 class="page-title">
+                Politique de confidentialité
+            </h1>
+
+            <p class="text-secondary">
+                Informations concernant les données utilisées
+                par l’application Actual.
+            </p>
+
+            <hr>
+
+            <h2 class="h4">Données enregistrées</h2>
+
+            <p>
+                Lors de la création d’un compte, l’application
+                peut enregistrer :
+            </p>
+
+            <ul>
+
+                <li>le nom d’utilisateur ;</li>
+
+                <li>le mot de passe sous une forme sécurisée et hachée ;</li>
+
+                <li>les réservations effectuées ;</li>
+
+                <li>la date de création du compte.</li>
+
+            </ul>
+
+            <h2 class="h4 mt-4">
+                Utilisation des données
+            </h2>
+
+            <p>
+                Ces informations sont utilisées uniquement pour :
+            </p>
+
+            <ul>
+
+                <li>permettre la connexion à l’application ;</li>
+
+                <li>enregistrer les réservations ;</li>
+
+                <li>afficher l’historique de l’utilisateur ;</li>
+
+                <li>administrer les cours et les réservations.</li>
+
+            </ul>
+
+            <h2 class="h4 mt-4">
+                Sécurité des mots de passe
+            </h2>
+
+            <p>
+                Les mots de passe ne sont pas enregistrés en clair.
+                Django les conserve sous une forme hachée.
+            </p>
+
+            <h2 class="h4 mt-4">Cookies</h2>
+
+            <p>
+                L’application utilise uniquement les cookies
+                techniques nécessaires à la connexion, à la session
+                de l’utilisateur et à la protection des formulaires.
+            </p>
+
+            <p>
+                Aucun cookie publicitaire ou outil de suivi
+                statistique n’est utilisé.
+            </p>
+
+            <h2 class="h4 mt-4">
+                Durée de conservation
+            </h2>
+
+            <p>
+                Les données sont conservées pendant la durée
+                nécessaire au fonctionnement et à la démonstration
+                du projet pédagogique.
+            </p>
+
+            <h2 class="h4 mt-4">Droits de l’utilisateur</h2>
+
+            <p>
+                Un utilisateur peut demander l’accès, la correction
+                ou la suppression de ses données en utilisant
+                l’adresse suivante :
+            </p>
+
+            <p>
+                <a href="mailto:adresse@email.fr">
+                    8686@holbertonstudents.com
+                </a>
+            </p>
+
+        </div>
+
+    </article>
+
+{% endblock %}

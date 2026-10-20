@@ -18,7 +18,7 @@
     </title>
 
     <link
-        href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/simplex/bootstrap.min.css"
+        href="{% static 'courses/css/bootstrap.min.css' %}"
         rel="stylesheet"
     >
 
@@ -31,7 +31,14 @@
 
 <body class="{% block body_class %}{% endblock %}">
 
-    <nav class="navbar navbar-expand-lg actual-navbar">
+    <a class="visually-hidden-focusable btn btn-light m-2" href="#main-content">
+    Aller au contenu principal
+    </a>
+
+    <nav
+    class="navbar navbar-expand-lg actual-navbar"
+    aria-label="Navigation principale"
+    >
 
         <div class="container">
 
@@ -91,16 +98,16 @@
 
                     {% if user.is_authenticated %}
 
+                        <span class="navbar-username">
+                            Bonjour {{ user.username }}
+                        </span>
+
                         <a
                             class="btn btn-outline-light"
                             href="{% url 'my_reservations' %}"
                         >
                             Mes réservations
                         </a>
-
-                        <span class="navbar-username">
-                            {{ user.username }}
-                        </span>
 
                         <form
                             method="post"
@@ -168,19 +175,53 @@
 
     {% endif %}
 
-    {% block main %}
+    <div id="main-content" tabindex="-1"></div>
 
-        <main class="container page-content">
+        {% block main %}
 
-            {% block content %}
-            {% endblock %}
+            <main class="container page-content">
 
-        </main>
+                {% block content %}
+                {% endblock %}
 
-    {% endblock %}
+            </main>
+
+        {% endblock %}
+    
+    </div>
+
+    <footer class="border-top mt-5 py-4">
+
+    <div
+        class="container d-flex flex-column
+        flex-md-row justify-content-between gap-3"
+    >
+
+        <p class="mb-0 text-secondary">
+            © 2026 Actual — Projet pédagogique
+        </p>
+
+        <nav aria-label="Informations légales">
+
+            <a
+                class="me-3"
+                href="{% url 'legal_notice' %}"
+            >
+                Mentions légales
+            </a>
+
+            <a href="{% url 'privacy_policy' %}">
+                Confidentialité
+            </a>
+
+        </nav>
+
+    </div>
+
+    </footer>
 
     <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        src="<https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js>"
     ></script>
 
 </body>

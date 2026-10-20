@@ -223,3 +223,18 @@ def home(request):
         request,
         'courses/home.html'
     )
+
+def legal_notice(request):
+
+    return render(
+        request,
+        'courses/legal_notice.html'
+    )
+
+
+def privacy_policy(request):
+
+    return render(
+        request,
+        'courses/privacy_policy.html'
+    )

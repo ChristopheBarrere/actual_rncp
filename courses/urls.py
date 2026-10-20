@@ -54,4 +54,16 @@ urlpatterns = [
         name='course_detail'
     ),
 
+    path(
+        'mentions-legales/',
+        views.legal_notice,
+        name='legal_notice'
+    ),
+
+    path(
+        'confidentialite/',
+        views.privacy_policy,
+        name='privacy_policy'
+    ),
+
 ]
